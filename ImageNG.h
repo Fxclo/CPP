@@ -26,7 +26,7 @@ public:
 
   int getId() const;
 
-  char* getNom() const;
+  const char* getNom() const;
 
   void Affiche() const;
 

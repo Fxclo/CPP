@@ -6,28 +6,28 @@ using namespace std;
 
 ImageNG::ImageNG() // constructeur par défaut
 {
-  nom = new char[20];
+  nom = NULL;
   setNom("default");
   setId(1);
 }
 
 ImageNG::~ImageNG() // destructeur
 {
-  delete nom;
+  if(nom) delete nom;
 }
 
 ImageNG::ImageNG(int id, const char* N) // constructeur d'initialisation
 {
-  nom = new char[20];
+  nom = NULL;
   setNom(N);
   setId(id);
 }
 
 ImageNG::ImageNG(const ImageNG& image1) // constructeur de copie
 {
-  nom = new char[20];
-  setNom(image1.nom);
-  setId(image1.id);
+  nom = NULL;
+  setNom(image1.getNom());
+  setId(image1.getId());
 }
 
 
@@ -39,8 +39,12 @@ void ImageNG::setId(int val)
 
 void ImageNG::setNom(const char* N)
 {
-  if (strlen(N)== 0)
+  if (strlen(N)== 0) // si la chaine est vide
     return;
+
+  if (nom) delete nom;
+
+  nom = new char[strlen(N)+1]; // on alloue dynamiquement
   strcpy(nom, N);
 }
 
@@ -49,7 +53,7 @@ int ImageNG::getId() const
   return id; 
 }
 
-char* ImageNG::getNom() const
+const char* ImageNG::getNom() const
 {
   return nom;
 }
