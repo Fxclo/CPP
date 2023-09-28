@@ -14,6 +14,7 @@ ImageNG::ImageNG() // constructeur par défaut
 ImageNG::~ImageNG() // destructeur
 {
   if(nom) delete nom;
+  cout << "--Destructeur ImageNG--" << endl;
 }
 
 ImageNG::ImageNG(int id, const char* N) // constructeur d'initialisation

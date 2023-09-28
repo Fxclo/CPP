@@ -28,7 +28,7 @@ Dimension::Dimension(const Dimension& objet)
 
 Dimension::~Dimension()
 {
-  cout << "--Destructeur--" << endl;
+  cout << "--Destructeur Dimension--" << endl;
 }
 
 void Dimension::setLargeur(int vL)
