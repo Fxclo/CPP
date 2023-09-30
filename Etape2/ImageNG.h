@@ -9,6 +9,7 @@ private:
 
   int id;
   char* nom;
+  
   Dimension dimension;
 
 public:

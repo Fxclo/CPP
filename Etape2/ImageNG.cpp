@@ -9,6 +9,8 @@ ImageNG::ImageNG() // constructeur par défaut
   nom = NULL;
   setNom("default");
   setId(1);
+
+  cout << "--Constructeur ImageNG--" << endl;
 }
 
 ImageNG::~ImageNG() // destructeur
@@ -22,6 +24,8 @@ ImageNG::ImageNG(int id, const char* N) // constructeur d'initialisation
   nom = NULL;
   setNom(N);
   setId(id);
+
+  cout << "--Constructeur ImageNG--" << endl;
 }
 
 ImageNG::ImageNG(const ImageNG& image1) // constructeur de copie
@@ -29,6 +33,8 @@ ImageNG::ImageNG(const ImageNG& image1) // constructeur de copie
   nom = NULL;
   setNom(image1.getNom());
   setId(image1.getId());
+
+  cout << "--Constructeur ImageNG--" << endl;
 }
 
 ImageNG::ImageNG(int id, const char* N, Dimension dim) 
@@ -36,8 +42,9 @@ ImageNG::ImageNG(int id, const char* N, Dimension dim)
   nom = NULL;
   setNom(N);
   setId(id);
-
   setDimension(dim);
+
+  cout << "--Constructeur ImageNG--" << endl;
 }
 
 void ImageNG::setDimension(Dimension dim)
