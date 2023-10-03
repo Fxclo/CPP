@@ -37,7 +37,7 @@ ImageNG::ImageNG(const ImageNG& image1) // constructeur de copie
   cout << "--Constructeur ImageNG--" << endl;
 }
 
-ImageNG::ImageNG(int id, const char* N, Dimension dim) 
+ImageNG::ImageNG(int id, const char* N,const Dimension& dim) 
 {
   nom = NULL;
   setNom(N);
@@ -47,7 +47,7 @@ ImageNG::ImageNG(int id, const char* N, Dimension dim)
   cout << "--Constructeur ImageNG--" << endl;
 }
 
-void ImageNG::setDimension(Dimension dim)
+void ImageNG::setDimension(const Dimension& dim)
 {
   dimension = dim;
 }
