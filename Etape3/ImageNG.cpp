@@ -34,7 +34,7 @@ ImageNG::ImageNG(const ImageNG& image1) // constructeur de copie
   setId(image1.getId());
 }
 
-ImageNG::ImageNG(int id, const char* N, Dimension dim) 
+ImageNG::ImageNG(int id, const char* N, const Dimension& dim) 
 {
   nom = NULL;
   setNom(N);
@@ -43,7 +43,7 @@ ImageNG::ImageNG(int id, const char* N, Dimension dim)
   setDimension(dim);
 }
 
-void ImageNG::setDimension(Dimension dim)
+void ImageNG::setDimension(const Dimension& dim)
 {
   dimension = dim;
 }
@@ -64,6 +64,30 @@ void ImageNG::setNom(const char* N)
 
   nom = new char[strlen(N)+1]; // on alloue dynamiquement
   strcpy(nom, N);
+}
+
+void ImageNG::setBackground(int val)
+{
+  if(val < 0) return; 
+  
+  for(int i = 0; i < dimension.getLargeur(); i++)
+  {
+    for(int j = 0; j < dimension.getHauteur(); j++) dimension[i][j] = val; // je mets tous les pixels au meme niveau de gris
+  }
+}
+
+void ImageNG::setPixel(int x, int y, int val)
+{
+  if (x < 0) return;
+  if (y < 0) return;
+  if (val < 0) return;
+
+  dimension[x][y] = val; // je donne un niveau de gris à un pixel précis de la matrice
+}
+
+int ImageNG::getPixel(int x, int y) const
+{
+  return dimension[x]][y]; // je retourne le niveau de gris du pixel
 }
 
 Dimension ImageNG::getDimension() const
