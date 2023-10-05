@@ -6,6 +6,7 @@ using namespace std;
 #include <QApplication>
 #include "ImageNG.h"
 #include "Dimension.h"
+#include "MyQT.h"
 
 int  Menu();
 void Essai1();

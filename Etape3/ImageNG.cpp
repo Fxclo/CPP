@@ -1,17 +1,17 @@
 #include "ImageNG.h"
+#include "MyQT.h"
 #include <iostream>
 #include <string.h>
 
 using namespace std;
-
-const int ImageNG::L_MAX(500);
-const int ImageNG::H_MAX(500);
 
 ImageNG::ImageNG() // constructeur par défaut
 {
   nom = NULL;
   setNom("default");
   setId(1);
+  setDimension(getDimension());
+  setBackground(0);
 }
 
 ImageNG::~ImageNG() // destructeur
@@ -72,7 +72,7 @@ void ImageNG::setBackground(int val)
   
   for(int i = 0; i < dimension.getLargeur(); i++)
   {
-    for(int j = 0; j < dimension.getHauteur(); j++) dimension[i][j] = val; // je mets tous les pixels au meme niveau de gris
+    for(int j = 0; j < dimension.getHauteur(); j++) matrice[i][j]= val; // je mets tous les pixels au meme niveau de gris
   }
 }
 
@@ -82,12 +82,12 @@ void ImageNG::setPixel(int x, int y, int val)
   if (y < 0) return;
   if (val < 0) return;
 
-  dimension[x][y] = val; // je donne un niveau de gris à un pixel précis de la matrice
+  matrice[x][y] = val; // je donne un niveau de gris à un pixel précis de la matrice
 }
 
 int ImageNG::getPixel(int x, int y) const
 {
-  return dimension[x]][y]; // je retourne le niveau de gris du pixel
+  return matrice[x][y]; // je retourne le niveau de gris du pixel
 }
 
 Dimension ImageNG::getDimension() const
@@ -110,4 +110,19 @@ void ImageNG::Affiche() const
   cout << "Nom : " << getNom() << endl;
   cout << "ID : " << getId() << endl;
   dimension.Affiche();
+}
+
+void ImageNG::Dessine() const
+{
+  MyQT::ViewImage(*this);
+}
+
+void ImageNG::importFromFile(const char* fichier) 
+{
+  MyQT::ImportFromFile(*this, fichier);
+}
+
+void ImageNG::exportToFile(const char* fichier, const char* format)
+{
+  MyQT::ExportToFile(*this, fichier, format);
 }

@@ -2,22 +2,15 @@
 #define IMAGE_H
 #include "Dimension.h"
 
+class MyQT;
+
 class ImageNG
 {
 
-private:
+  public:
 
-  int id;
-  char* nom;
-
-  Dimension dimension;
-
-  int matrice[L_MAX][H_MAX];
-
-public:
-
-  static const int L_MAX;
-  static const int H_MAX;
+  static const int L_MAX = 500;
+  static const int H_MAX = 500;
 
   ImageNG(); // constructeur par défaut
   ~ImageNG(); // destructeur
@@ -31,14 +24,28 @@ public:
 
   void setPixel(int x, int y, int val);
   void setBackground(int val);
-  int getPixel(int x, int y) const
+  int getPixel(int x, int y) const;
 
-  Dimension getDimension()const;
-  int getId()const;
-  const char* getNom()const;
+  Dimension getDimension() const;
+  int getId() const;
+  const char* getNom() const;
 
-  void Affiche()const;
+  void Affiche() const;
 
+  void Dessine() const;
+
+  void importFromFile(const char* fichier);
+  void exportToFile(const char* fichier, const char* format);
+
+
+  private:
+
+  int id;
+  char* nom;
+
+  Dimension dimension;
+
+  int matrice[L_MAX][H_MAX];
 };
 
 #endif
