@@ -45,9 +45,12 @@ ImageNG::ImageNG(int id, const char* N, const Dimension& dim)
 
 void ImageNG::setDimension(const Dimension& dim)
 {
-  dimension = dim;
-}
+  if(dim.getHauteur() > H_MAX) dimension.setHauteur(H_MAX);
+  else dimension.setHauteur(dim.getHauteur());
 
+  if(dim.getLargeur() > L_MAX) dimension.setLargeur(L_MAX);
+  else dimension.setLargeur(dim.getLargeur());
+}
 
 void ImageNG::setId(int val)
 {
