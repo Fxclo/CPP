@@ -10,8 +10,8 @@ ImageNG::ImageNG() // constructeur par défaut
   nom = NULL;
   setNom("default");
   setId(1);
-  setDimension(getDimension());
   setBackground(0);
+  setDimension(getDimension());
 }
 
 ImageNG::~ImageNG() // destructeur
@@ -25,6 +25,7 @@ ImageNG::ImageNG(int id, const char* N) // constructeur d'initialisation
   nom = NULL;
   setNom(N);
   setId(id);
+  setBackground(0);
 }
 
 ImageNG::ImageNG(const ImageNG& image1) // constructeur de copie
@@ -32,6 +33,13 @@ ImageNG::ImageNG(const ImageNG& image1) // constructeur de copie
   nom = NULL;
   setNom(image1.getNom());
   setId(image1.getId());
+
+ for(int i = 0; i < dimension.getLargeur(); i++)
+  {
+    for(int j = 0; j < dimension.getHauteur(); j++) matrice[i][j]= image1.matrice[i][j];
+  }
+
+  setDimension(image1.getDimension());
 }
 
 ImageNG::ImageNG(int id, const char* N, const Dimension& dim) 
@@ -39,7 +47,7 @@ ImageNG::ImageNG(int id, const char* N, const Dimension& dim)
   nom = NULL;
   setNom(N);
   setId(id);
-
+  setBackground(0);
   setDimension(dim);
 }
 
@@ -73,9 +81,9 @@ void ImageNG::setBackground(int val)
 {
   if(val < 0) return; 
   
-  for(int i = 0; i < dimension.getLargeur(); i++)
+  for(int i = 0; i < L_MAX; i++)
   {
-    for(int j = 0; j < dimension.getHauteur(); j++) matrice[i][j]= val; // je mets tous les pixels au meme niveau de gris
+    for(int j = 0; j < H_MAX; j++) matrice[i][j]= val; // je mets tous les pixels au meme niveau de gris
   }
 }
 
