@@ -11,7 +11,7 @@ ImageNG::ImageNG() // constructeur par défaut
   setNom("default");
   setId(1);
   setBackground(0);
-  setDimension(getDimension());
+  //setDimension(getDimension());
 }
 
 ImageNG::~ImageNG() // destructeur
@@ -34,12 +34,12 @@ ImageNG::ImageNG(const ImageNG& image1) // constructeur de copie
   setNom(image1.getNom());
   setId(image1.getId());
 
+  setDimension(image1.getDimension());
+
  for(int i = 0; i < dimension.getLargeur(); i++)
   {
     for(int j = 0; j < dimension.getHauteur(); j++) matrice[i][j]= image1.matrice[i][j];
   }
-
-  setDimension(image1.getDimension());
 }
 
 ImageNG::ImageNG(int id, const char* N, const Dimension& dim) 
