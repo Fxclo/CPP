@@ -134,19 +134,21 @@ const char* ImageNG::getNom() const
 
 int ImageNG::getLuminance() const
  {
-  int somme = 0;
+  int somme = 0, moyenne = 0;
 
   for(int i = 0; i<dimension.getHauteur(); i++)
   {
     for(int j = 0; j<dimension.getLargeur(); j++) somme = somme + matrice[i][j];
   }
 
-  return somme;
+  moyenne = somme / (dimension.getHauteur() * dimension.getLargeur());
+
+  return moyenne;
  }
 
 int ImageNG::getMinimum() const
  {
-  int minimum = 0;
+  int minimum = 255;
 
   for(int i = 0; i<dimension.getHauteur(); i++)
   {
@@ -178,7 +180,7 @@ float ImageNG::getContraste() const
 {
   float contraste = 0;
 
-  contraste = (getMaximum()-getMinimum()) / (getMaximum()+getMinimum());
+  contraste = (float)(getMaximum()-getMinimum()) / (float)(getMaximum()+getMinimum());
 
   return contraste;
 }
@@ -217,8 +219,8 @@ void ImageNG::exportToFile(const char* fichier, const char* format)
 
 ImageNG& ImageNG::operator=(const ImageNG& image) // on return une reference d'un objet
 {
-  nom = strdup(image.nom);
-  id = image.id;
+  setNom(image.nom);
+  setId(image.id);
   dimension.setHauteur(image.dimension.getHauteur());
   dimension.setLargeur(image.dimension.getLargeur());
 
@@ -233,7 +235,6 @@ ImageNG& ImageNG::operator=(const ImageNG& image) // on return une reference d'u
 ImageNG ImageNG::operator+(int val)
 {
   ImageNG imageNEW(*this);
-
   
     for(int i = 0; i < imageNEW.dimension.getLargeur(); i++)
     {
@@ -245,7 +246,6 @@ ImageNG ImageNG::operator+(int val)
         }
     }
   
-
   return imageNEW;
 }
 
@@ -295,7 +295,7 @@ ImageNG ImageNG::operator++() // pré-incrémentation
 
 ImageNG ImageNG::operator++(int AucuneVal) // post-incrémentation
 {
-  ImageNG temp(*this); // copie non modifee de l’objet courant
+  ImageNG temp(*this); // copie de l’objet courant
   (*this) = (*this) + 20;
 
   return temp;
@@ -310,7 +310,7 @@ ImageNG ImageNG::operator--() // pré-décrémentation
 
 ImageNG ImageNG::operator--(int AucuneVal) // post-décrémentation
 {
-  ImageNG temp(*this); // copie non modifee de l’objet courant
+  ImageNG temp(*this); // copie de l’objet courant
   (*this) = (*this) - 20;
 
   return temp;
@@ -322,10 +322,7 @@ bool ImageNG::operator<(const ImageNG& image) const
     {
         for (int j = 0; j < dimension.getHauteur(); j++) 
         {
-            if (matrice[i][j] >= image.matrice[i][j]) 
-            {
-                return false; // Si au moins un pixel n'est pas <, l'image n'est pas < que l'autre
-            }
+            if (matrice[i][j] >= image.matrice[i][j]) return false; // Si au moins un pixel n'est pas <, l'image n'est pas < que l'autre
         }
     }
     return true; // Tous les pixels sont <
@@ -337,10 +334,7 @@ bool ImageNG::operator>(const ImageNG& image) const
     {
         for (int j = 0; j < dimension.getHauteur(); j++) 
         {
-            if (matrice[i][j] <= image.matrice[i][j]) 
-            {
-                return false; // Si au moins un pixel n'est pas >, l'image n'est pas > que l'autre
-            }
+            if (matrice[i][j] <= image.matrice[i][j]) return false; // Si au moins un pixel n'est pas >, l'image n'est pas > que l'autre
         }
     }
     return true; // Tous les pixels sont >
@@ -352,19 +346,15 @@ bool ImageNG::operator==(const ImageNG& image) const
     {
         for (int j = 0; j < dimension.getHauteur(); ++j) 
         {
-            if (matrice[i][j] != image.matrice[i][j]) 
-            {
-                return false; // Si au moins un pixel est différent, les images ne sont pas égales
-            }
+            if (matrice[i][j] != image.matrice[i][j]) return false; // Si au moins un pixel est différent, les images ne sont pas égales
         }
     }
     return true; // Tous les pixels sont égaux
 }
 
-
 ostream& operator<<(ostream& s,const ImageNG& image)
 {
- s << "nom : " << image.nom << endl << "id : " << image.id << endl << "dimension : " << image.dimension.getHauteur() << "/" << image.dimension.getLargeur() << endl;
+ s << "nom : " << image.nom << " | id : " << image.id  << " | dimension : " << image.dimension.getHauteur() << "/" << image.dimension.getLargeur() << " | Luminance : " << image.getLuminance() << " | Contraste : " << image.getContraste() << endl;
 
  return s;
 }

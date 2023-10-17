@@ -55,7 +55,6 @@ class ImageNG
   bool operator>(const ImageNG& image) const;
   bool operator==(const ImageNG& image) const;
 
-
   friend std::ostream& operator<<(std::ostream& s,const ImageNG& image);
   friend ImageNG operator+(int val, ImageNG image);
 
