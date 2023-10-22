@@ -1,0 +1,59 @@
+.SILENT:
+
+EditionLiens = g++ Test5.cpp -o Test5 MyQT.o ImageNG.o Dimension.o Image.o Couleur.o ImageRGB.o ImageB.o -lSDL -lpthread -Wl,-O1 -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++ /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so /usr/lib64/libGL.so
+
+CompilationMyQT = g++ -c MyQT.cpp -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++
+
+CompilationImageNG = g++ -Wall ImageNG.cpp -c
+
+CompilationDimension = g++ -Wall Dimension.cpp -c
+
+CompilationImage = g++ -Wall Image.cpp -c
+
+CompilationCouleur = g++ -Wall Couleur.cpp -c
+
+CompilationImageRGB = g++ -Wall ImageRGB.cpp -c
+
+CompilationImageB = g++ -Wall ImageB.cpp -c
+
+SuppFile = rm -f
+
+Test5:	Test5.cpp ImageNG.o MyQT.o Dimension.o Image.o Couleur.o ImageRGB.o ImageB.o
+		$(EditionLiens)
+		echo Edition des liens...
+
+MyQT.o:	MyQT.cpp MyQT.h
+		$(CompilationMyQT)
+		echo Compilation de MyQT...
+
+ImageNG.o:	ImageNG.cpp ImageNG.h
+		$(CompilationImageNG)
+		echo Compilation de ImageNG.o...
+
+Dimension.o:	Dimension.cpp Dimension.h
+		$(CompilationDimension)
+		echo Compilation de Dimension.o...
+
+Image.o:	Image.cpp Image.h
+		$(CompilationImage)
+		echo Compilation de Image.o...
+
+Couleur.o:	Couleur.cpp Couleur.h
+		$(CompilationCouleur)
+		echo Compilation de Couleur.o...
+
+ImageRGB.o:	ImageRGB.cpp ImageRGB.h
+		$(CompilationImageRGB)
+		echo Compilation de ImageRGB.o...
+
+ImageB.o:	ImageB.cpp ImageB.h
+		$(CompilationImageB)
+		echo Compilation de ImageB.o...
+
+clean:	
+		$(SuppFile) *.o
+
+clobber:	clean
+		$(SuppFile) Test5
+		echo Suppression faite !
+		
