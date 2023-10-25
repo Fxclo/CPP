@@ -3,8 +3,6 @@
 #include "Dimension.h"
 #include "Image.h"
 
-class MyQT;
-
 class ImageNG : public Image
 {
 

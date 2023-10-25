@@ -148,7 +148,7 @@ void Essai3()
   image.setNom("La Joconde");
   image.setId(1);
   image.Affiche();
-  cout << "Largeur = " << image.getDimension().getLargeur() << endl;
+  cout << "Largeur = " << image.getDimension().getLargeur() << endl; 
   cout << "Hauteur = " << image.getDimension().getHauteur() << endl;
   cout << "Valeur du pixel (125,56) = " << image.getPixel(125,56) << endl;
   image.Dessine();

@@ -2,8 +2,6 @@
 #define IMAGE_H
 #include "Dimension.h"
 
-class MyQT;
-
 class Image
 {
 	public:
