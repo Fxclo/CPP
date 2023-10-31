@@ -18,6 +18,8 @@ Image::Image() // constructeur par défaut
 
 Image::~Image() // destructeur
 {
+  if(nom) delete nom;
+  
   cout << "--Destructeur Image--" << endl;
 }
 
