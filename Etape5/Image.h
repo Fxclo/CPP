@@ -10,7 +10,7 @@ class Image
   	static const int H_MAX = 500;
 
 	Image(); 											// constructeur par défaut
-	virtual ~Image(); 											// destructeur
+	virtual ~Image(); 									// destructeur virtuel
 	Image(int id, const char* N);						// constructeur d'init. partiel
 	Image(const Image& image1); 						// constructeur de copie
   	Image(int id, const char* N, const Dimension& dim); // constructeur d'initialisation complet
