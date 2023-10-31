@@ -2,6 +2,8 @@
 #include "MyQT.h"
 #include <iostream>
 #include <string.h>
+#include "RGBException.h"
+#include "XYException.h"
 
 using namespace std;
 
@@ -18,6 +20,8 @@ ImageNG::ImageNG() : Image()  // constructeur par défaut
 
 ImageNG::~ImageNG() // destructeur
 {
+  if(nom) delete nom;
+
   cout << "--Destructeur ImageNG--" << endl;
 }
 
@@ -57,25 +61,31 @@ ImageNG::ImageNG(const char* fichier) : Image(fichier)
 
 void ImageNG::setBackground(int val)
 {
-  if(val < 0) return; 
+  if(val < 0) throw RGBException(val, "Le niveau de gris ne peut pas être négatif!");
   
-  for(int i = 0; i < L_MAX; i++)
+  for(int i = 0; i < dimension.getLargeur(); i++)
   {
-    for(int j = 0; j < H_MAX; j++) matrice[i][j] = val; // je mets tous les pixels au meme niveau de gris
+    for(int j = 0; j < dimension.getHauteur(); j++) matrice[i][j] = val; // je mets tous les pixels au meme niveau de gris
   }
 }
 
 void ImageNG::setPixel(int x, int y, int val)
 {
-  if (x < 0) return;
-  if (y < 0) return;
-  if (val < 0) return;
+  if (x < 0 && y < 0) throw XYException('d', "coordonnées x et y invalides!");
+  else if (x < 0) throw XYException('x', "coordonnée x invalide!");
+  else if (y < 0) throw XYException('y', "coordonnée y invalide!");
+  if (val < 0) throw RGBException(val, "Le niveau de gris ne peut pas être négatif!");
+  if (val > 255) throw RGBException(val, "Le niveau de gris ne peut pas aller au delà de 255!");
 
   matrice[x][y] = val; // je donne un niveau de gris à un pixel précis de la matrice
 }
 
 int ImageNG::getPixel(int x, int y) const
 {
+  if (x < 0 && y < 0) throw XYException('d', "coordonnées x et y invalides!");
+  else if (x < 0) throw XYException('x', "coordonnée x invalide!");
+  else if (y < 0) throw XYException('y', "coordonnée y invalide!");
+
   return matrice[x][y]; // je retourne le niveau de gris du pixel
 }
 
@@ -83,9 +93,9 @@ int ImageNG::getLuminance() const
  {
   int somme = 0, moyenne = 0;
 
-  for(int i = 0; i<dimension.getHauteur(); i++)
+  for(int i = 0; i < dimension.getLargeur(); i++)
   {
-    for(int j = 0; j<dimension.getLargeur(); j++) somme = somme + matrice[i][j];
+    for(int j = 0; j < dimension.getHauteur(); j++) somme = somme + matrice[i][j];
   }
 
   moyenne = somme / (dimension.getHauteur() * dimension.getLargeur());
@@ -126,6 +136,11 @@ int ImageNG::getMaximum() const
 float ImageNG::getContraste() const
 {
   float contraste = 0;
+
+  int min = getMinimum();
+  int max = getMaximum();
+
+  if(!min && !max) return 0;
 
   contraste = (float)(getMaximum()-getMinimum()) / (float)(getMaximum()+getMinimum());
 
@@ -219,6 +234,9 @@ ImageNG ImageNG::operator-(int val)
 
 ImageNG ImageNG::operator-(const ImageNG& image)
 {
+  if (dimension.getLargeur() != image.dimension.getLargeur()) throw XYException('x', "Largeurs inégales!");
+  if (dimension.getHauteur() != image.dimension.getHauteur()) throw XYException('y', "Hauteurs inégales!");
+
   ImageNG imageNEW(*this);
 
   for(int i = 0; i < imageNEW.dimension.getLargeur(); i++)
@@ -265,6 +283,9 @@ ImageNG ImageNG::operator--(int AucuneVal) // post-décrémentation
 
 bool ImageNG::operator<(const ImageNG& image) const 
 {
+  if (dimension.getLargeur() != image.dimension.getLargeur()) throw XYException('x', "Largeurs inégales!");
+  if (dimension.getHauteur() != image.dimension.getHauteur()) throw XYException('y', "Hauteurs inégales!");
+
     for (int i = 0; i < dimension.getLargeur(); i++) 
     {
         for (int j = 0; j < dimension.getHauteur(); j++) 
@@ -277,6 +298,9 @@ bool ImageNG::operator<(const ImageNG& image) const
 
 bool ImageNG::operator>(const ImageNG& image) const 
 {
+  if (dimension.getLargeur() != image.dimension.getLargeur()) throw XYException('x', "Largeurs inégales!");
+  if (dimension.getHauteur() != image.dimension.getHauteur()) throw XYException('y', "Hauteurs inégales!");
+
     for (int i = 0; i < dimension.getLargeur(); i++) 
     {
         for (int j = 0; j < dimension.getHauteur(); j++) 
@@ -289,6 +313,9 @@ bool ImageNG::operator>(const ImageNG& image) const
 
 bool ImageNG::operator==(const ImageNG& image) const 
 {  
+  if (dimension.getLargeur() != image.dimension.getLargeur()) throw XYException('x', "Largeurs inégales!");
+  if (dimension.getHauteur() != image.dimension.getHauteur()) throw XYException('y', "Hauteurs inégales!");
+
     for (int i = 0; i < dimension.getLargeur(); ++i) 
     {
         for (int j = 0; j < dimension.getHauteur(); ++j) 

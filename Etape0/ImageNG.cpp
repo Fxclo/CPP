@@ -18,6 +18,8 @@ ImageNG::ImageNG() : Image()  // constructeur par défaut
 
 ImageNG::~ImageNG() // destructeur
 {
+  if(nom) delete nom;
+
   cout << "--Destructeur ImageNG--" << endl;
 }
 
