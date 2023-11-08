@@ -25,10 +25,9 @@ XYException::XYException(char coord, string message) : Exception(message)
 }
 
 /*
-XYException::XYException(const XYException& except) : Exception(except)
+XYException::XYException(const XYException& except) 
 {
 	setMessage(except.UserMessage);
-	setCoordonnee(except.coordonnee);
 
 	cout << "--Constructeur de copie XYException--" << endl;
 }*/

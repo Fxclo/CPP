@@ -11,8 +11,8 @@ protected:
 
 public:
 
-	Exception();
-	virtual ~Exception();
+	Exception() throw();
+	virtual ~Exception() throw();
 	Exception(string message);
 	Exception(const Exception& exept);
 

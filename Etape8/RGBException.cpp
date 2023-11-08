@@ -25,10 +25,9 @@ RGBException::RGBException(int val, string message) : Exception(message)
 }
 
 /*
-RGBException::RGBException(const RGBException& except) : Exception(except)
+RGBException::RGBException(const RGBException& except) 
 {
 	setMessage(except.UserMessage);
-	setValeur(except.valeur);
 
 	cout << "--Constructeur de copie RGBException--" << endl;
 }*/

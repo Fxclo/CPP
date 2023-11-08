@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string.h>
 #include "XYException.h"
+#include <fstream>
 
 using namespace std;
 
@@ -142,4 +143,60 @@ ostream& operator<<(ostream& s,const ImageRGB& image)
  s << "nom : " << image.nom << " | id : " << image.id  << " | dimension : " << image.dimension.getLargeur() << "/" << image.dimension.getHauteur() << endl;
 
  return s;
+}
+
+/********************************************************************/
+/* METHODE AVEC LES FICHIERS                                        */
+/********************************************************************/
+
+void ImageRGB::Save(ofstream& fichier) const
+{
+  int identifiant = getId();
+  fichier.write((char*)&identifiant, sizeof(int));
+
+  int lgChaine = strlen(nom); // taille du nom
+  fichier.write((char*)&lgChaine, sizeof(int));
+
+  char *nomTemp = new char[lgChaine + 1]; 
+  strcpy(nomTemp, getNom());
+  fichier.write(nomTemp, lgChaine);
+
+  dimension.Save(fichier);
+
+  Couleur pixel;
+  for (int i = 0; i < dimension.getLargeur(); i++)
+  {
+    for (int j = 0; j < dimension.getHauteur(); j++)
+    {
+      pixel = matrice[i][j];
+      fichier.write((char*)&pixel, sizeof(Couleur)); 
+    }
+  }
+}
+
+void ImageRGB::Load(ifstream& fichier)
+{
+    int identifiant;
+    fichier.read((char*)&identifiant, sizeof(int));
+    setId(identifiant);
+
+    int lgChaine;
+    fichier.read((char*)&lgChaine, sizeof(int));
+
+    char* nomTemp = new char[lgChaine+1];
+    fichier.read(nomTemp, lgChaine);
+    setNom(nomTemp);
+    delete [] nomTemp;
+
+    dimension.Load(fichier);
+
+    for (int i = 0; i < dimension.getLargeur(); i++) 
+    {
+        for (int j = 0; j < dimension.getHauteur(); j++) 
+        {
+            Couleur pixel;
+            fichier.read((char*)&pixel, sizeof(Couleur));
+            matrice[i][j] = pixel;
+        }
+    }
 }

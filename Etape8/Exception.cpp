@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Exception::Exception()
+Exception::Exception() throw()
 {
 	setMessage("");
 

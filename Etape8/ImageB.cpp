@@ -140,3 +140,59 @@ ostream& operator<<(ostream& s,const ImageB& image)
 
  return s;
 }
+
+/********************************************************************/
+/* METHODE AVEC LES FICHIERS                                        */
+/********************************************************************/
+
+void ImageB::Save(ofstream& fichier) const
+{
+  int identifiant = getId();
+  fichier.write((char*)&identifiant, sizeof(int));
+
+  int lgChaine = strlen(nom); // taille du nom
+  fichier.write((char*)&lgChaine, sizeof(int));
+
+  char *nomTemp = new char[lgChaine + 1]; 
+  strcpy(nomTemp, getNom());
+  fichier.write(nomTemp, lgChaine);
+
+  dimension.Save(fichier);
+
+  bool pixel;
+  for (int i = 0; i < dimension.getLargeur(); i++)
+  {
+    for (int j = 0; j < dimension.getHauteur(); j++)
+    {
+      pixel = matrice[i][j];
+      fichier.write((char*)&pixel, sizeof(bool));
+    }
+  }
+}
+
+void ImageB::Load(ifstream& fichier)
+{
+    int identifiant;
+    fichier.read((char*)&identifiant, sizeof(int));
+    setId(identifiant);
+
+    int lgChaine;
+    fichier.read((char*)&lgChaine, sizeof(int));
+
+    char* nomTemp = new char[lgChaine+1];
+    fichier.read(nomTemp, lgChaine);
+    setNom(nomTemp);
+    delete [] nomTemp;
+
+    dimension.Load(fichier);
+
+    for (int i = 0; i < dimension.getLargeur(); i++) 
+    {
+        for (int j = 0; j < dimension.getHauteur(); j++) 
+        {
+            bool pixel;
+            fichier.read((char*)&pixel, sizeof(bool));
+            matrice[i][j] = pixel;
+        }
+    }
+}
